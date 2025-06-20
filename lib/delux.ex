@@ -510,7 +510,9 @@ defmodule Delux do
   defp open_indicators(backend_module, backend_config, indicator_configs) do
     for {name, config} <- indicator_configs, reduce: %{} do
       acc ->
-        combined_config = Map.merge(Map.new(backend_config), Map.new(config))
+        combined_config =
+          Map.new(backend_config) |> Map.merge(Map.new(config)) |> Map.put(:name, name)
+
         Map.put(acc, name, backend_module.open(combined_config))
     end
   end

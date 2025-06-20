@@ -21,10 +21,23 @@ defmodule Delux.Backend.AsciiArt do
   * `:red` - the name of the red LED if it exists
   * `:green` - the name of the green LED if it exists
   * `:blue` - the name of the blue LED if it exists
+  * `:mode` - visualization mode (:iex_friendly, :status_bar, :rich_blocks)
+  * `:update_interval` - milliseconds between updates (default: 500)
   """
   @impl Backend
   def open(options) do
-    {:ok, pid} = AsciiArtIndicator.start_link(options)
+    # Extract ASCII art specific options
+    mode = options[:mode] || :iex_friendly
+    update_interval = options[:update_interval] || 500
+
+    # Start the indicator with ASCII art specific configuration
+    indicator_opts =
+      options
+      |> Map.put(:mode, mode)
+      |> Map.put(:update_interval, update_interval)
+      |> Map.to_list()
+
+    {:ok, pid} = AsciiArtIndicator.start_link(indicator_opts)
     %__MODULE__{pid: pid}
   end
 

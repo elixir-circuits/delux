@@ -25,13 +25,24 @@ defmodule Delux.Backend.AsciiArtIndicator do
   @impl GenServer
   def init(opts) do
     {:ok, _ref} = :timer.send_interval(100, :tick)
+
+    # Ensure the AsciiArtServer is running with the requested mode
+    mode = opts[:mode] || :iex_friendly
+    update_interval = opts[:update_interval] || 500
+
+    case Process.whereis(AsciiArtServer) do
+      nil ->
+        {:ok, _} = AsciiArtServer.start_link(mode: mode, update_interval: update_interval)
+
+      _pid ->
+        :ok = AsciiArtServer.set_mode(mode)
+    end
+
     {:ok, %__MODULE__{name: opts[:name] || "#{inspect(self())}", gl: opts[:gl]}}
   end
 
   @impl GenServer
   def handle_call({:run, program}, _from, state) do
-    IO.puts("Run #{inspect(program)}")
-
     new_state =
       %{
         state
