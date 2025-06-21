@@ -26,16 +26,14 @@ defmodule Delux.Backend.AsciiArtIndicator do
   def init(opts) do
     {:ok, _ref} = :timer.send_interval(100, :tick)
 
-    # Ensure the AsciiArtServer is running with the requested mode
-    mode = opts[:mode] || :iex_friendly
     update_interval = opts[:update_interval] || 500
 
     case Process.whereis(AsciiArtServer) do
       nil ->
-        {:ok, _} = AsciiArtServer.start_link(mode: mode, update_interval: update_interval)
+        {:ok, _} = AsciiArtServer.start_link(update_interval: update_interval)
 
       _pid ->
-        :ok = AsciiArtServer.set_mode(mode)
+        :ok
     end
 
     {:ok, %__MODULE__{name: opts[:name] || "#{inspect(self())}", gl: opts[:gl]}}

@@ -2,21 +2,13 @@
 
 # Enhanced ASCII Art Backend Example
 #
-# This example demonstrates the improved ASCII art backend with multiple
-# visualization modes that are IEx-friendly and provide better LED representation.
-
 Mix.install([
   {:delux, path: ".."}
 ])
 
 defmodule EnhancedAsciiExample do
   @moduledoc """
-  Demonstrates the enhanced ASCII art backend with multiple visualization modes.
-
-  Modes available:
-  - :iex_friendly - Periodic timestamped updates, IEx prompt safe
-  - :rich_blocks - Unicode symbols with intensity levels
-  - :status_bar - Fixed status bar (traditional mode)
+  Demonstrates the enhanced ASCII art backend.
   """
 
   alias Delux.Effects
@@ -24,17 +16,12 @@ defmodule EnhancedAsciiExample do
   def run do
     IO.puts("=== Enhanced ASCII Art Backend Demo ===\n")
 
-    show_visualization_modes()
-
-    mode = get_visualization_mode()
-
     # Configure Delux with the chosen visualization mode
     {:ok, delux_pid} =
       Delux.start_link(
         name: :enhanced_demo,
         backend: %{
           module: Delux.Backend.AsciiArt,
-          mode: mode,
           # Faster updates for demo
           update_interval: 300
         },
@@ -45,47 +32,11 @@ defmodule EnhancedAsciiExample do
         }
       )
 
-    IO.puts("\nUsing visualization mode: #{mode}")
-    IO.puts("Watch the LED indicators below...\n")
-
-    case mode do
-      :status_bar ->
-        IO.puts("LED status will appear at the top of your terminal.")
-        IO.puts("Note: This mode may interfere with IEx prompt.\n")
-
-      :iex_friendly ->
-        IO.puts("LED status updates will appear as timestamped log entries.")
-        IO.puts("This mode is safe to use with IEx.\n")
-
-      :rich_blocks ->
-        IO.puts("LED status will show with Unicode symbols indicating intensity.")
-        IO.puts("This mode is also IEx-friendly.\n")
-    end
+    IO.puts("Watch the LED indicators at the top of your terminal...\n")
 
     run_demo_sequence(delux_pid)
 
-    IO.puts("\nDemo complete! The #{mode} mode provides:")
-    print_mode_benefits(mode)
-
     GenServer.stop(delux_pid)
-  end
-
-  defp show_visualization_modes do
-    IO.puts("Available visualization modes:")
-    IO.puts("1. IEx Friendly - Timestamped updates, safe with IEx (recommended)")
-    IO.puts("2. Rich Blocks - Unicode symbols with intensity levels")
-    IO.puts("3. Status Bar - Fixed top-line status (may interfere with IEx)")
-    IO.puts("")
-  end
-
-  defp get_visualization_mode do
-    IO.write("Choose mode (1-3, default 1): ")
-
-    case IO.read(:line) |> String.trim() do
-      "2" -> :rich_blocks
-      "3" -> :status_bar
-      _ -> :iex_friendly
-    end
   end
 
   defp run_demo_sequence(delux_pid) do
@@ -155,27 +106,6 @@ defmodule EnhancedAsciiExample do
     IO.puts("Demo 5: Turning off")
     Delux.clear(delux_pid, :status)
     Process.sleep(2000)
-  end
-
-  defp print_mode_benefits(:iex_friendly) do
-    IO.puts("✓ Safe to use with IEx REPL")
-    IO.puts("✓ Timestamped updates for debugging")
-    IO.puts("✓ Non-intrusive output")
-    IO.puts("✓ Easy to scroll back through history")
-  end
-
-  defp print_mode_benefits(:rich_blocks) do
-    IO.puts("✓ Visual intensity indicators with Unicode symbols")
-    IO.puts("✓ Color-coded LED states")
-    IO.puts("✓ IEx-friendly timestamped output")
-    IO.puts("✓ More intuitive LED representation")
-  end
-
-  defp print_mode_benefits(:status_bar) do
-    IO.puts("✓ Real-time updating status bar")
-    IO.puts("✓ Compact display")
-    IO.puts("✓ Similar to hardware debugging tools")
-    IO.puts("⚠ May interfere with IEx prompt")
   end
 end
 
