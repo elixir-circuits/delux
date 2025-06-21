@@ -186,7 +186,7 @@ defmodule Delux.Backend.AsciiArtServer do
   # Status bar rendering - compact colored indicators
   defp render_led_status_bar({name, {r, g, b}}) do
     color = rgb_to_ansi_color({r, g, b})
-    [color, name]
+    [color, to_string(name)]
   end
 
   defp calculate_intensity({r, g, b}) do
@@ -201,17 +201,10 @@ defmodule Delux.Backend.AsciiArtServer do
   defp intensity_to_symbol(_), do: @led_off
 
   defp rgb_to_ansi_color({r, g, b}) do
-    # Convert RGB values to closest ANSI color
-    cond do
-      r > 0.8 and g < 0.3 and b < 0.3 -> :red
-      r < 0.3 and g > 0.8 and b < 0.3 -> :green
-      r < 0.3 and g < 0.3 and b > 0.8 -> :blue
-      r > 0.8 and g > 0.8 and b < 0.3 -> :yellow
-      r > 0.8 and g < 0.3 and b > 0.8 -> :magenta
-      r < 0.3 and g > 0.8 and b > 0.8 -> :cyan
-      r > 0.6 and g > 0.6 and b > 0.6 -> :white
-      r > 0.3 or g > 0.3 or b > 0.3 -> :light_black
-      true -> :black
-    end
+    # Convert RGB values (0.0-1.0) to integers (0-5) for IO.ANSI.color/3
+    r_int = round(r * 5)
+    g_int = round(g * 5)
+    b_int = round(b * 5)
+    IO.ANSI.color(r_int, g_int, b_int)
   end
 end
