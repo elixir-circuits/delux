@@ -8,16 +8,8 @@ defmodule Delux.Backend.AsciiArtServer do
   use GenServer
 
   # Unicode blocks for LED intensity representation
-  # Empty circle
   @led_off "○"
-  # Half-filled circle
-  @led_dim "◐"
-  # Different half-filled
-  @led_medium "◑"
-  # Filled circle
-  @led_bright "●"
-  # Hexagon (like LED package)
-  @led_full "⬢"
+  @led_on "●"
 
   # Status bar ANSI codes (only used in status_bar mode)
   @ansi_push_state "\e[s"
@@ -93,28 +85,15 @@ defmodule Delux.Backend.AsciiArtServer do
   end
 
   # Status bar rendering - Unicode LED symbols with uncolored names
-  defp render_led_status_bar({name, {r, g, b}}) do
-    color = rgb_to_ansi_color({r, g, b})
-    symbol = intensity_to_symbol(calculate_intensity({r, g, b}))
-    [color, symbol, IO.ANSI.reset(), " ", to_string(name)]
+  defp render_led_status_bar({name, color}) do
+    [rgb_to_ansi_color(color), symbol(color), IO.ANSI.default_color(), " ", to_string(name)]
   end
 
-  defp calculate_intensity({r, g, b}) do
-    # Calculate perceived brightness using standard luminance formula
-    0.299 * r + 0.587 * g + 0.114 * b
-  end
-
-  defp intensity_to_symbol(intensity) when intensity >= 0.8, do: @led_full
-  defp intensity_to_symbol(intensity) when intensity >= 0.6, do: @led_bright
-  defp intensity_to_symbol(intensity) when intensity >= 0.4, do: @led_medium
-  defp intensity_to_symbol(intensity) when intensity >= 0.2, do: @led_dim
-  defp intensity_to_symbol(_), do: @led_off
+  defp symbol({0, 0, 0}), do: @led_off
+  defp symbol(_), do: @led_on
 
   defp rgb_to_ansi_color({r, g, b}) do
     # Convert RGB values (0.0-1.0) to integers (0-5) for IO.ANSI.color/3
-    r_int = round(r * 5)
-    g_int = round(g * 5)
-    b_int = round(b * 5)
-    IO.ANSI.color(r_int, g_int, b_int)
+    IO.ANSI.color(round(r * 5), round(g * 5), round(b * 5))
   end
 end
