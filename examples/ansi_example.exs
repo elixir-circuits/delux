@@ -1,8 +1,8 @@
 #!/usr/bin/env elixir
 
-# ASCII Art Backend Example
+# ANSI Backend Example
 #
-# This example demonstrates how to use Delux's ASCII art backend to visualize
+# This example demonstrates how to use Delux's ANSI backend to visualize
 # LED patterns in the terminal instead of controlling physical LEDs. This is
 # useful for:
 # - Development and testing without hardware
@@ -15,23 +15,23 @@ Mix.install([
   {:delux, path: ".."}
 ])
 
-defmodule AsciiArtExample do
+defmodule ANSIExample do
   @moduledoc """
-  Demonstrates the ASCII art backend for Delux LED control.
+  Demonstrates the ANSI backend for Delux LED control.
 
-  The ASCII art backend renders LED states as colored text in the terminal,
+  The ANSI backend renders LED states as colored text in the terminal,
   allowing you to see how your LED programs will behave without physical hardware.
   """
 
-  alias Delux.Backend.AsciiArtServer
+  alias Delux.Backend.ANSI
   alias Delux.Effects
   alias Delux.Morse
 
   def run() do
-    IO.puts("=== Delux ASCII Art Backend Example ===\n")
+    IO.puts("=== Delux ANSI Backend Example ===\n")
 
-    # Start the ASCII art server that handles terminal rendering
-    {:ok, _pid} = AsciiArtServer.start_link([])
+    # Start the ANSI server that handles terminal rendering
+    {:ok, _pid} = ANSI.Server.start_link([])
 
     # Clear the screen and show a header
     IO.write(IO.ANSI.clear())
@@ -39,12 +39,12 @@ defmodule AsciiArtExample do
     IO.puts("=" |> String.duplicate(50))
     IO.puts("")
 
-    # Configure Delux with the ASCII art backend
+    # Configure Delux with the ANSI backend
     # This creates multiple indicators to show different patterns
     {:ok, delux_pid} =
       Delux.start_link(
-        name: :ascii_example,
-        backend: %{module: Delux.Backend.AsciiArt},
+        name: :ansi_example,
+        backend: %{module: Delux.Backend.ANSI},
         indicators: %{
           status: %{red: "status_r", green: "status_g", blue: "status_b"},
           network: %{green: "net_g", red: "net_r"},
@@ -66,7 +66,7 @@ defmodule AsciiArtExample do
     IO.read(:line)
 
     GenServer.stop(delux_pid)
-    GenServer.stop(AsciiArtServer)
+    GenServer.stop(ANSI.Server)
   end
 
   defp demo_basic_colors(delux_pid) do
@@ -170,7 +170,7 @@ defmodule AsciiArtExample do
 
   defp demo_brightness_levels(delux_pid) do
     IO.puts("\n6. Brightness Adjustment Demo")
-    IO.puts("   Testing brightness levels (note: ASCII art shows intensity via patterns)...")
+    IO.puts("   Testing brightness levels (note: ANSI shows intensity via patterns)...")
 
     # Set a bright pattern
     Delux.render(delux_pid, %{rgb_demo: Effects.on(:white)}, :status)
@@ -196,4 +196,4 @@ defmodule AsciiArtExample do
 end
 
 # Run the example
-AsciiArtExample.run()
+ANSIExample.run()

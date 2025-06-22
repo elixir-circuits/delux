@@ -1,15 +1,15 @@
-# Summary: ASCII Art Backend Example
+# Summary: ANSI Backend Example
 
 ## What was created
 
-I've successfully created a comprehensive example demonstrating the use of Delux's ASCII art backend. Here's what's included:
+I've successfully created a comprehensive example demonstrating the use of Delux's ANSI backend. Here's what's included:
 
 ### Files Created
 
-1. **`examples/ascii_art_example.exs`** - A comprehensive demo showing all major features of the ASCII art backend
-2. **`examples/interactive_ascii_example.exs`** - An interactive demo where users can control LED effects in real-time
-3. **`examples/ascii_art_test.exs`** - A simple test to verify the backend works correctly
-4. **`examples/README.md`** - Detailed documentation explaining how to use the ASCII art backend
+1. **`examples/ansi_example.exs`** - A comprehensive demo showing all major features of the ANSI backend
+2. **`examples/interactive_ansi_example.exs`** - An interactive demo where users can control LED effects in real-time
+3. **`examples/ansi_test.exs`** - A simple test to verify the backend works correctly
+4. **`examples/README.md`** - Detailed documentation explaining how to use the ANSI backend
 5. **`examples/run_examples.sh`** - A convenience script to run the different examples
 
 ### Features Demonstrated
@@ -28,7 +28,7 @@ The examples showcase:
 
 ### Technical Implementation
 
-The ASCII art backend provides:
+The ANSI backend provides:
 
 - **Visual LED simulation** in the terminal using ANSI colors
 - **Real-time updates** at ~10Hz for smooth animations
@@ -43,19 +43,19 @@ The examples can be run in several ways:
 ```bash
 # Quick test
 cd examples
-elixir ascii_art_test.exs
+elixir ansi_test.exs
 
 # Full demo
-elixir ascii_art_example.exs
+elixir ansi_example.exs
 
 # Interactive mode
-elixir interactive_ascii_example.exs
+elixir interactive_ansi_example.exs
 
 # Or use the menu script
 ./run_examples.sh
 ```
 
-### Benefits of the ASCII Art Backend
+### Benefits of the ANSI Backend
 
 1. **Development**: Test LED logic without physical hardware
 2. **Debugging**: Visualize complex LED sequences easily
@@ -65,11 +65,11 @@ elixir interactive_ascii_example.exs
 
 ### Integration Notes
 
-The ASCII art backend can be easily swapped with the hardware backend:
+The ANSI backend can be easily swapped with the hardware backend:
 
 ```elixir
-# Development (ASCII art)
-backend: %{module: Delux.Backend.AsciiArt}
+# Development (ANSI)
+backend: %{module: Delux.Backend.ANSI}
 
 # Production (real LEDs)
 backend: %{module: Delux.Backend.PatternTrigger, led_path: "/sys/class/leds"}
@@ -77,4 +77,4 @@ backend: %{module: Delux.Backend.PatternTrigger, led_path: "/sys/class/leds"}
 
 This makes it perfect for development workflows where you want to test LED behavior before deploying to actual hardware.
 
-The examples successfully demonstrate all the key capabilities of the ASCII art backend and provide a solid foundation for developers wanting to use this feature.
+The examples successfully demonstrate all the key capabilities of the ANSI backend and provide a solid foundation for developers wanting to use this feature.

@@ -1,11 +1,11 @@
-defmodule Delux.Backend.AsciiArt do
+defmodule Delux.Backend.ANSI do
   @moduledoc """
-  Show LED animations as ASCII art
+  Show LED animations as ANSI art
   """
   @behaviour Delux.Backend
 
   alias Delux.Backend
-  alias Delux.Backend.AsciiArtIndicator
+  alias Delux.Backend.ANSI
   alias Delux.Program
 
   defstruct [:pid]
@@ -26,18 +26,18 @@ defmodule Delux.Backend.AsciiArt do
   """
   @impl Backend
   def open(options) do
-    # Extract ASCII art specific options
+    # Extract ANSI art specific options
     mode = options[:mode] || :iex_friendly
     update_interval = options[:update_interval] || 500
 
-    # Start the indicator with ASCII art specific configuration
+    # Start the indicator with ANSI art specific configuration
     indicator_opts =
       options
       |> Map.put(:mode, mode)
       |> Map.put(:update_interval, update_interval)
       |> Map.to_list()
 
-    {:ok, pid} = AsciiArtIndicator.start_link(indicator_opts)
+    {:ok, pid} = ANSI.Indicator.start_link(indicator_opts)
     %__MODULE__{pid: pid}
   end
 
@@ -58,7 +58,7 @@ defmodule Delux.Backend.AsciiArt do
   """
   @impl Backend
   def run(%__MODULE__{} = state, compiled, _time_offset) do
-    AsciiArtIndicator.run(state.pid, compiled)
+    ANSI.Indicator.run(state.pid, compiled)
     :infinity
   end
 

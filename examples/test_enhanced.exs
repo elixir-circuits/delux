@@ -1,6 +1,6 @@
 #!/usr/bin/env elixir
 
-# Simple test of the enhanced ASCII art server
+# Simple test of the enhanced ANSI server
 
 Mix.install([
   {:delux, path: ".."}
@@ -10,7 +10,7 @@ Mix.install([
 {:ok, _delux_pid} =
   Delux.start_link(
     backend: %{
-      module: Delux.Backend.AsciiArt,
+      module: Delux.Backend.ANSI,
       mode: :rich_blocks,
       update_interval: 1000
     },
@@ -19,7 +19,7 @@ Mix.install([
     }
   )
 
-IO.puts("Testing enhanced ASCII art backend...")
+IO.puts("Testing enhanced ANSI backend...")
 IO.puts("Watch for timestamped LED updates below:\n")
 
 # Test sequence

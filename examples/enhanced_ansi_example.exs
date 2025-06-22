@@ -1,27 +1,27 @@
 #!/usr/bin/env elixir
 
-# Enhanced ASCII Art Backend Example
+# Enhanced ANSI Backend Example
 #
 Mix.install([
   {:delux, path: ".."}
 ])
 
-defmodule EnhancedAsciiExample do
+defmodule EnhancedANSIExample do
   @moduledoc """
-  Demonstrates the enhanced ASCII art backend.
+  Demonstrates the enhanced ANSI backend.
   """
 
   alias Delux.Effects
 
   def run do
-    IO.puts("=== Enhanced ASCII Art Backend Demo ===\n")
+    IO.puts("=== Enhanced ANSI Backend Demo ===\n")
 
     # Configure Delux with the chosen visualization mode
     {:ok, delux_pid} =
       Delux.start_link(
         name: :enhanced_demo,
         backend: %{
-          module: Delux.Backend.AsciiArt,
+          module: Delux.Backend.ANSI,
           # Faster updates for demo
           update_interval: 300
         },
@@ -110,4 +110,4 @@ defmodule EnhancedAsciiExample do
 end
 
 # Run the enhanced demo
-EnhancedAsciiExample.run()
+EnhancedANSIExample.run()

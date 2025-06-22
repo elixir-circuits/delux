@@ -1,37 +1,37 @@
 #!/usr/bin/env elixir
 
-# Simple test to verify ASCII art backend functionality
+# Simple test to verify ANSI backend functionality
 
 Mix.install([
   {:delux, path: ".."}
 ])
 
-defmodule AsciiArtTest do
+defmodule ANSITest do
   @moduledoc """
-  Simple test to verify ASCII art backend works correctly.
+  Simple test to verify ANSI backend works correctly.
   """
 
-  alias Delux.Backend.AsciiArtServer
+  alias Delux.Backend.ANSI.Server
   alias Delux.Effects
 
   def run() do
-    IO.puts("Testing ASCII Art Backend...")
+    IO.puts("Testing ANSI Backend...")
 
-    # Start the ASCII art server
-    {:ok, server_pid} = AsciiArtServer.start_link([])
-    IO.puts("✓ ASCII art server started")
+    # Start the ANSI server
+    {:ok, server_pid} = ANSI.Server.start_link([])
+    IO.puts("✓ ANSI server started")
 
-    # Configure Delux with ASCII art backend
+    # Configure Delux with ANSI backend
     {:ok, delux_pid} =
       Delux.start_link(
         name: :test_delux,
-        backend: %{module: Delux.Backend.AsciiArt},
+        backend: %{module: Delux.Backend.ANSI},
         indicators: %{
           test_led: %{red: "test_r", green: "test_g", blue: "test_b"}
         }
       )
 
-    IO.puts("✓ Delux started with ASCII art backend")
+    IO.puts("✓ Delux started with ANSI backend")
 
     # Test basic functionality
     IO.puts("\nTesting basic LED control...")
@@ -68,8 +68,8 @@ defmodule AsciiArtTest do
     GenServer.stop(delux_pid)
     GenServer.stop(server_pid)
 
-    IO.puts("\n✅ All tests passed! ASCII art backend is working correctly.")
+    IO.puts("\n✅ All tests passed! ANSI backend is working correctly.")
   end
 end
 
-AsciiArtTest.run()
+ANSITest.run()

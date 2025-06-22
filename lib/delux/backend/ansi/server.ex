@@ -1,6 +1,6 @@
-defmodule Delux.Backend.AsciiArtServer do
+defmodule Delux.Backend.ANSI.Server do
   @moduledoc """
-  Renderer for ASCII Art indicators
+  Renderer for ANSI indicators
 
   This module renders a status bar so you can see the current state of the
   LEDs in your terminal.

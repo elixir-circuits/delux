@@ -1,31 +1,31 @@
 #!/usr/bin/env elixir
 
-# Interactive ASCII Art Backend Example
+# Interactive ANSI Backend Example
 #
-# This provides an interactive way to test the ASCII art backend with
+# This provides an interactive way to test the ANSI backend with
 # different effects and settings.
 
 Mix.install([
   {:delux, path: ".."}
 ])
 
-defmodule InteractiveAsciiExample do
+defmodule InteractiveANSIExample do
   @moduledoc """
-  Interactive demo for the ASCII art backend.
+  Interactive demo for the ANSI backend.
 
   This allows you to experiment with different LED effects and see them
   rendered in real-time in your terminal.
   """
 
-  alias Delux.Backend.AsciiArtServer
+  alias Delux.Backend.ANSI
   alias Delux.Effects
   alias Delux.Morse
 
   def run() do
-    IO.puts("=== Interactive Delux ASCII Art Backend ===\n")
+    IO.puts("=== Interactive Delux ANSI Backend ===\n")
 
-    # Start the ASCII art server
-    {:ok, _pid} = AsciiArtServer.start_link([])
+    # Start the ANSI server
+    {:ok, _pid} = ANSI.Server.start_link([])
 
     # Clear screen and setup display
     IO.write(IO.ANSI.clear())
@@ -39,7 +39,7 @@ defmodule InteractiveAsciiExample do
     {:ok, delux_pid} =
       Delux.start_link(
         name: :interactive_demo,
-        backend: %{module: Delux.Backend.AsciiArt},
+        backend: %{module: Delux.Backend.ANSI},
         indicators: %{
           led1: %{red: "led1_r", green: "led1_g", blue: "led1_b"},
           led2: %{red: "led2_r", green: "led2_g", blue: "led2_b"},
@@ -52,7 +52,7 @@ defmodule InteractiveAsciiExample do
 
     # Cleanup
     GenServer.stop(delux_pid)
-    GenServer.stop(AsciiArtServer)
+    GenServer.stop(ANSI.Server)
   end
 
   defp interactive_loop(delux_pid) do
@@ -340,4 +340,4 @@ defmodule InteractiveAsciiExample do
 end
 
 # Start the interactive demo
-InteractiveAsciiExample.run()
+InteractiveANSIExample.run()

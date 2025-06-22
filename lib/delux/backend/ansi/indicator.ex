@@ -1,9 +1,9 @@
-defmodule Delux.Backend.AsciiArtIndicator do
+defmodule Delux.Backend.ANSI.Indicator do
   @moduledoc """
-  Program runner for one ASCII art indicator
+  Program runner for one ANSI indicator
   """
   use GenServer
-  alias Delux.Backend.AsciiArtServer
+  alias Delux.Backend.ANSI
 
   defstruct [:name, :program, :red, :green, :blue, :r_time, :g_time, :b_time, :rgb, :gl]
 
@@ -17,9 +17,9 @@ defmodule Delux.Backend.AsciiArtIndicator do
     GenServer.stop(server)
   end
 
-  @spec run(GenServer.server(), Delux.Pattern.t()) :: :ok
-  def run(server, pattern) do
-    GenServer.call(server, {:run, pattern})
+  @spec run(GenServer.server(), Delux.Program.t()) :: :ok
+  def run(server, %Delux.Program{} = program) do
+    GenServer.call(server, {:run, program})
   end
 
   @impl GenServer
@@ -29,9 +29,9 @@ defmodule Delux.Backend.AsciiArtIndicator do
     name = opts[:name] || inspect(self())
     update_interval = opts[:update_interval] || 500
 
-    case Process.whereis(AsciiArtServer) do
+    case Process.whereis(ANSI.Server) do
       nil ->
-        {:ok, _} = AsciiArtServer.start_link(update_interval: update_interval)
+        {:ok, _} = ANSI.Server.start_link(update_interval: update_interval)
         :ok
 
       _pid ->
@@ -76,7 +76,7 @@ defmodule Delux.Backend.AsciiArtIndicator do
   end
 
   defp render(state) do
-    AsciiArtServer.update(state.name, state.rgb)
+    ANSI.Server.update(state.name, state.rgb)
 
     state
   end
