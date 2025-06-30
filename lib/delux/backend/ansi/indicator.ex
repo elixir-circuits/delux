@@ -27,16 +27,6 @@ defmodule Delux.Backend.ANSI.Indicator do
     {:ok, _ref} = :timer.send_interval(100, :tick)
 
     name = opts[:name] || inspect(self())
-    update_interval = opts[:update_interval] || 500
-
-    case Process.whereis(ANSI.Server) do
-      nil ->
-        {:ok, _} = ANSI.Server.start_link(update_interval: update_interval)
-        :ok
-
-      _pid ->
-        :ok
-    end
 
     {:ok, %__MODULE__{name: name, gl: opts[:gl]}}
   end

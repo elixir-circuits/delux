@@ -26,6 +26,9 @@ defmodule Delux.Backend.ANSI do
   """
   @impl Backend
   def open(options) do
+    # Ensure supervisor is started
+    ensure_supervisor_started(options)
+
     # Extract ANSI art specific options
     mode = options[:mode] || :iex_friendly
     update_interval = options[:update_interval] || 500
@@ -35,9 +38,8 @@ defmodule Delux.Backend.ANSI do
       options
       |> Map.put(:mode, mode)
       |> Map.put(:update_interval, update_interval)
-      |> Map.to_list()
 
-    {:ok, pid} = ANSI.Indicator.start_link(indicator_opts)
+    {:ok, pid} = ANSI.Supervisor.start_indicator(indicator_opts)
     %__MODULE__{pid: pid}
   end
 
@@ -67,7 +69,20 @@ defmodule Delux.Backend.ANSI do
   """
   @impl Backend
   def close(%__MODULE__{} = state) do
-    GenServer.stop(state.pid)
+    ANSI.Supervisor.stop_indicator(state.pid)
     :ok
+  end
+
+  # Private helper to ensure the supervisor is started
+  defp ensure_supervisor_started(options) do
+    case Process.whereis(ANSI.Supervisor.supervisor_name()) do
+      nil ->
+        update_interval = options[:update_interval] || 500
+        {:ok, _pid} = ANSI.Supervisor.start_link(update_interval: update_interval)
+        :ok
+
+      _pid ->
+        :ok
+    end
   end
 end
