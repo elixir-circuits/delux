@@ -1,6 +1,6 @@
 # 💡 delux 💡
 
-[![CircleCI](https://circleci.com/gh/smartrent/delux.svg?style=svg)](https://circleci.com/gh/smartrent/delux)
+[![CircleCI](https://circleci.com/gh/elixir-circuits/delux.svg?style=svg)](https://circleci.com/gh/elixir-circuits/delux)
 [![Hex version](https://img.shields.io/hexpm/v/delux.svg "Hex version")](https://hex.pm/packages/delux)
 
 _de lux_ | _Latin (roughly) for "of the light"_
