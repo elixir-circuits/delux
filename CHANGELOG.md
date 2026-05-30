@@ -4,6 +4,12 @@
 -->
 # Changelog
 
+## v0.4.2 - 2026-05-29
+
+This release drops support for Elixir 1.15 and earlier. Other than that it only
+has cosmetic changes from moving the repository to the Elixir Circuits
+organization and adding copyright and license headers.
+
 ## v0.4.1 - 2022-10-17
 
 * Changes
