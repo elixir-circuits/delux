@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2022 SmartRent
+# SPDX-FileCopyrightText: 2022 Masatoshi Nishiguchi
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 defmodule Delux.Program do
   @moduledoc """
   Create LED patterns

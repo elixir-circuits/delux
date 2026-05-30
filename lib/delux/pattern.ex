@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022 SmartRent
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 defmodule Delux.Pattern do
   @moduledoc """
   Utility functions for handling element sequences for one LED

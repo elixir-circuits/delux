@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022 SmartRent
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 defmodule Delux do
   @moduledoc File.read!("README.md")
              |> String.split("<!-- MODULEDOC -->")

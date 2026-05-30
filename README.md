@@ -1,7 +1,13 @@
+<!--
+  SPDX-FileCopyrightText: 2022 SmartRent
+  SPDX-License-Identifier: CC-BY-4.0
+-->
 # 💡 delux 💡
 
-[![CircleCI](https://circleci.com/gh/elixir-circuits/delux.svg?style=svg)](https://circleci.com/gh/elixir-circuits/delux)
 [![Hex version](https://img.shields.io/hexpm/v/delux.svg "Hex version")](https://hex.pm/packages/delux)
+[![API docs](https://img.shields.io/hexpm/v/delux.svg?label=hexdocs "API docs")](https://hexdocs.pm/delux/Delux.html)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/elixir-circuits/delux/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/elixir-circuits/delux/tree/main)
+[![REUSE status](https://api.reuse.software/badge/github.com/elixir-circuits/delux)](https://api.reuse.software/info/github.com/elixir-circuits/delux)
 
 _de lux_ | _Latin (roughly) for "of the light"_
 
