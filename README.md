@@ -6,6 +6,7 @@
 
 [![Hex version](https://img.shields.io/hexpm/v/delux.svg "Hex version")](https://hex.pm/packages/delux)
 [![API docs](https://img.shields.io/hexpm/v/delux.svg?label=hexdocs "API docs")](https://delux.hexdocs.pm/Delux.html)
+[![Nerves compatibility](https://compatibility.nerves-project.org/badge/delux.svg)](https://compatibility.nerves-project.org/packages/delux)
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/elixir-circuits/delux/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/elixir-circuits/delux/tree/main)
 [![REUSE status](https://api.reuse.software/badge/github.com/elixir-circuits/delux)](https://api.reuse.software/info/github.com/elixir-circuits/delux)
 
