@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: 2022 SmartRent
 # SPDX-FileCopyrightText: 2022 Masatoshi Nishiguchi
+# SPDX-FileCopyrightText: 2026 Mario Uher
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -334,6 +335,26 @@ defmodule DeluxTest do
     assert_raise ArgumentError, fn ->
       Delux.info_as_ansidata(pid, :not_an_indicator)
     end
+  end
+
+  @tag :tmp_dir
+  test "stops refreshing after a one-shot program ends", %{tmp_dir: led_dir} do
+    FakeLEDs.create_leds(led_dir, 1)
+
+    pid =
+      start_supervised!(
+        {Delux,
+         name: nil, backend: [led_path: led_dir, hz: 0], indicators: %{default: %{green: "led0"}}}
+      )
+
+    Delux.render(pid, Delux.Effects.blip(:green, :black), :status)
+    Process.sleep(200)
+
+    :erlang.trace(pid, true, [:receive])
+    Process.sleep(100)
+    :erlang.trace(pid, false, [:receive])
+
+    refute_received {:trace, ^pid, :receive, :refresh}
   end
 
   defp info_as_binary(pid, indicator \\ :default) do

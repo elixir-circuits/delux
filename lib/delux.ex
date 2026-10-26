@@ -1,4 +1,5 @@
 # SPDX-FileCopyrightText: 2022 SmartRent
+# SPDX-FileCopyrightText: 2026 Mario Uher
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -430,6 +431,7 @@ defmodule Delux do
   end
 
   defp refresh_indicators(state) do
+    state = %{state | refresh_time: :infinity}
     current_time = System.monotonic_time(:millisecond)
 
     new_state =
