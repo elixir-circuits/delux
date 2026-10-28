@@ -502,6 +502,10 @@ defmodule Delux do
     {:noreply, refresh_indicators(state)}
   end
 
+  def handle_info(_msg, state) do
+    {:noreply, state}
+  end
+
   defp open_indicators(backend_config, indicator_configs) do
     for {name, config} <- indicator_configs, reduce: %{} do
       acc ->
