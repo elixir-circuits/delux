@@ -4,6 +4,13 @@
 -->
 # Changelog
 
+## v0.4.3 - 2026-10-41
+
+* Changes
+  * Fix handling of one-shot programs that would schedule an unnecessary refresh
+    request. These would accumulate and lead to performance degradation and
+    `Delux.render/3` timeouts. (@ream88)
+
 ## v0.4.2 - 2026-05-29
 
 This release drops support for Elixir 1.15 and earlier. Other than that it only
